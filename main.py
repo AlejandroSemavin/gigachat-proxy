@@ -7,7 +7,7 @@ if "PORT" in os.environ:  # Проверяем наличие именно от 
     uvicorn_config_port = int(os.getenv("PORT"))
 else:
     uvicorn_config_port = 8000  # Дефолтный порт для локалки
-
+os.environ["UVICORN_PORT"] = str(uvicorn_config_port)
 app = FastAPI()
 GIGACHAT_API_URL = "https://gigachat.api.sber.ru/v1/chat/completions"
 MODEL_NAME = os.getenv("MODEL_NAME", "gpt-4.0-turbo")
@@ -30,5 +30,5 @@ async def proxy_gigachat(request: Request):
         
     return response.json()
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=uvicorn_config_port)
+# if __name__ == "__main__":
+#    uvicorn.run(app, host="0.0.0.0", port=uvicorn_config_port)
