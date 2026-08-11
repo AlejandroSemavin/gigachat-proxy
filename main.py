@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 import httpx
 import uvicorn
+import os # И этот тоже должен быть здесь
 
 if "PORT" in os.environ:  # Проверяем наличие именно от Railway
     uvicorn_config_port = int(os.getenv("PORT"))
