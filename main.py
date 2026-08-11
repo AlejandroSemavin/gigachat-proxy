@@ -6,7 +6,7 @@ import os # И этот тоже должен быть здесь
 if "PORT" in os.environ:  # Проверяем наличие именно от Railway
     uvicorn_config_port = int(os.getenv("PORT"))
 else:
-    uvicorn_config_port = 8080  # Дефолтный порт для локалки
+    uvicorn_config_port = 8000  # Дефолтный порт для локалки
 
 app = FastAPI()
 GIGACHAT_API_URL = "https://gigachat.api.sber.ru/v1/chat/completions"
