@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 import httpx
-import uvicorn
-import os # И этот тоже должен быть здесь
+# import uvicorn
+# import os # И этот тоже должен быть здесь
 
 if "PORT" in os.environ:  # Проверяем наличие именно от Railway
     uvicorn_config_port = int(os.getenv("PORT"))
@@ -32,3 +32,22 @@ async def proxy_gigachat(request: Request):
 
 # if __name__ == "__main__":
 #    uvicorn.run(app, host="0.0.0.0", port=uvicorn_config_port)
+
+if __name__ == "__main__":
+    # Запускаем встроенный сервер Starlette
+    import os
+    import asyncio
+    
+    host = "0.0.0.0"
+    port = int(os.getenv("PORT", 80))
+
+    loop = asyncio.new_event_loop()
+    config = app.lifespan_config(
+        app=app,
+        host=host,
+        port=port,
+        log_level="info",
+        reload=False,
+    )
+    server = app.create_server(config=config)
+    loop.run_until_complete(server)
