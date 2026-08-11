@@ -1,6 +1,11 @@
 from fastapi import FastAPI, Request
 import httpx
-import os
+import uvicorn
+
+if "PORT" in os.environ:  # Проверяем наличие именно от Railway
+    uvicorn_config_port = int(os.getenv("PORT"))
+else:
+    uvicorn_config_port = 8000  # Дефолтный порт для локалки
 
 app = FastAPI()
 GIGACHAT_API_URL = "https://gigachat.api.sber.ru/v1/chat/completions"
@@ -23,3 +28,6 @@ async def proxy_gigachat(request: Request):
         response = await client.post(GIGACHAT_API_URL, json=body, headers=headers)
         
     return response.json()
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=uvicorn_config_port)
